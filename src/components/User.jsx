@@ -1,6 +1,6 @@
 import React from "react";
 import Qualitie from "./Qualitie";
-import Bookmark from "./Bookmark";
+import Bookmark from "./bookMark";
 
 const User = ({
   _id,

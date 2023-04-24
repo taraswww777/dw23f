@@ -1,7 +1,17 @@
-import React from "react";
-import User from "./User";
+import React, { useState } from "react";
+import User from "./user";
+import Pagination from "./pagination";
+import { paginate } from "../utils/paginate";
 
 const Users = ({ users, userLength, ...rest }) => {
+  const pageSize = 4;
+  const [currentPage, setCurrentPage] = useState(1);
+  const handlePageChange = (pageIndex) => {
+    setCurrentPage(pageIndex);
+    console.log("page", pageIndex);
+  };
+
+  const userCrop = paginate(users, currentPage, pageSize);
   return (
     <>
       {userLength > 0 && (
@@ -18,12 +28,18 @@ const Users = ({ users, userLength, ...rest }) => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {userCrop.map((user) => (
               <User key={user._id} {...user} {...rest} />
             ))}
           </tbody>
         </table>
       )}
+      <Pagination
+        itemsCount={userLength}
+        pageSize={pageSize}
+        onPageChange={handlePageChange}
+        currentPage={currentPage}
+      />
     </>
   );
 };
